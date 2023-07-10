@@ -119,6 +119,10 @@ a {
   text-align: center;
   text-decoration: none;
 }
+.heading a {
+  text-decoration: none;
+  color: black;
+}
 
 @media (max-width: 960px) {
   .container {

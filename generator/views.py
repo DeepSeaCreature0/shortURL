@@ -67,24 +67,26 @@ class linkshorter(viewsets.ReadOnlyModelViewSet):
 
         id=self.getLastID()+1
         actual_url=request.POST.get('actual_url')
+        print("actual_url =",actual_url)
 
         # Check if the URL is valid or not
         if self.isValidURL(actual_url) == False:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+            return render(request,'generator/error.html')
         
         short_url=self.generateHashValue(id)
 
         new_link=link.objects.create(id=id,actual_url=actual_url,short_url=short_url)
         new_link.save()
-        context={
-            "short_url":short_url
-        }
-        return render(request,'generator/link.html',context)
-        # serialize_data=LinkSerializers(new_link)
 
+        # serialize_data=LinkSerializers(new_link)
+        
+        context = {'short_url': short_url}
+        print(context)
+
+        return render(request,'generator/link.html',context)
         # return JsonResponse(data=serialize_data.data)
     
-
+# <host:prt>/<>
 # Redirecting the user to actual URL when the user uses short URL
 class Redirector(View):
 
@@ -93,6 +95,7 @@ class Redirector(View):
         id=0
         hash_value_length=len(hash_value)
 
+        print("hash_value =",hash_value)
         for i in range(hash_value_length):
             if(ord(hash_value[i]) >= ord('a') and ord(hash_value) <= ord('z')):
                 ind= ord(hash_value[i]) - ord('a')
