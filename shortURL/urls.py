@@ -15,8 +15,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,include
+from generator.views import Redirector
+from generator.views import linkshorter
+
+from rest_framework.routers import DefaultRouter
+
+router = DefaultRouter()
+router.register('url' ,linkshorter)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("",include('generator.urls')),
+    path('', include(router.urls)),    
+    path('<str:hash_value>/' , Redirector.as_view() , name="redirect"),
 ]
