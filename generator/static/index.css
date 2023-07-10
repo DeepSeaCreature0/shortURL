@@ -123,6 +123,13 @@ a {
   text-decoration: none;
   color: black;
 }
+.container span {
+  position: absolute;
+  bottom: 5px;
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+}
 
 @media (max-width: 960px) {
   .container {
